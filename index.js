@@ -28,9 +28,19 @@ function dir_reader(path) {
     }
 }
 
+function files_sort(a,b) {
+    if(a.name<b.name){
+        return -1;
+    }else if (a.name>b.name){
+        return 1;
+    }else {
+        return 0;
+    }
+}
+
 
 dir_reader(path_src);
-pictures.sort();
+pictures.sort(files_sort);
 console.log(pictures.length);
 for (var i=0; i<pictures.length; i++){
     console.log("Имя файла: " + pictures[i].name + "\n" + "Путь:" + pictures[i].path + "\n\n");
