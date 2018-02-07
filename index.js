@@ -12,27 +12,27 @@ var pictures = [];
 console.log(process.argv[0], "+", process.argv[1]);
 
 function dir_reader(path) {
-    fs.readdir(path, function (err, items) {
-        for (var i = 0; i < items.length; i++) {
-            if ((items[i].indexOf(".")!=-1) && (items[i].indexOf(format)!=-1)){
-                //console.log(items[i]);
-                var png_file = {
-                    name: items[i],
-                    path: path
-                };
-                pictures.push(png_file);
-                //console.log(pictures);
-            } else {
-                dir_reader(path+"/"+items[i]);
-            }
+    var items = fs.readdirSync(path);
+    for (var i = 0; i < items.length; i++) {
+        if ((items[i].indexOf(".") != -1) && (items[i].indexOf(format) != -1)) {
+            //console.log(items[i]);
+            var png_file = {
+                name: items[i],
+                path: path
+            };
+            pictures.push(png_file);
+            //console.log(pictures);
+        } else {
+            dir_reader(path + "/" + items[i]);
         }
-    });
+    }
 }
 
 
 dir_reader(path_src);
+pictures.sort();
 console.log(pictures.length);
 for (var i=0; i<pictures.length; i++){
-    console.log("Имя файла: " + pictures[i].name + "\t" + "Путь:" + pictures[i].path);
+    console.log("Имя файла: " + pictures[i].name + "\n" + "Путь:" + pictures[i].path + "\n\n");
 }
 
